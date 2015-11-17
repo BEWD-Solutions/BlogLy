@@ -1,0 +1,85 @@
+<!-- Page Content -->
+<div class="container">
+
+    <div class="row">
+
+        <!-- Blog Post Content Column -->
+        <div class="col-lg-8">
+
+            <!-- Blog Post -->
+
+            <!-- Title -->
+            <h1><%= @post.post_title %></h1>
+
+            <!-- Author -->
+            <p class="lead">
+                by <%= @author.first_name %> <%= @author.last_name %>
+            </p>
+
+            <hr>
+
+            <!-- Date/Time -->
+            <p><span class="glyphicon glyphicon-time"></span> Posted on <%= @post.created_at.strftime("%B %-d, %Y") %></p>
+
+            <hr>
+
+            <!-- Preview Image -->
+            <img class="img-responsive" src="<%= @post.cover_image %>" alt="">
+
+            <hr>
+
+            <!-- Post Content -->
+            <p><%= simple_format(@post.post_text) %></p>
+
+            <hr>
+
+            <!-- Blog Comments -->
+            <% if user_signed_in? %>
+                <%= form_for @comment do |f| %>
+                    <!-- Comments Form -->
+                    <div class="well">
+                        <h4>Leave a Comment:</h4>
+                        <div class="form-group">
+                            <%= f.hidden_field :post_id, value: params[:id] %>
+                            <%= f.text_area :comment_text, placeholder: "Your Comment", class: "form-control" %>
+                        </div>
+                        <%= f.submit "Submit Comment", class: "btn btn-primary" %>
+                    </div>
+                <% end %>
+            <% end %>
+
+            <hr>
+
+            <!-- Posted Comments -->
+
+            <% @comments.each do |comment| %>
+                <!-- Comment -->
+                <div class="media">
+                    <div class="media-body">
+                        <h4 class="media-heading"><%= get_author_name(comment.user_id) %>
+                            <small><%= comment.created_at.strftime("%B %-d, %Y") %></small>
+                        </h4>
+                        <%= comment.comment_text %>
+                    </div>
+                </div>
+            <% end %>
+
+        </div>
+
+        <!-- Blog Sidebar Widgets Column -->
+        <div class="col-md-4">
+
+            <%= render "partials/search" %>
+
+            <!-- Side Widget Well -->
+            <div class="well">
+                <h4>About the Author</h4>
+                <p><%= simple_format(@author.about_me) %></p>
+            </div>
+
+        </div>
+
+    </div>
+    <!-- /.row -->
+
+    <hr>

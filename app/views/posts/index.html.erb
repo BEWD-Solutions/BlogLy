@@ -1,0 +1,46 @@
+<!-- Page Content -->
+<div class="container">
+
+    <!-- Page Heading -->
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header"><%= current_user.first_name %>'s Blog
+                <small>@<%= current_user.username %></small>
+            </h1>
+        </div>
+    </div>
+    <!-- /.row -->
+
+    <% @posts.each do |post| %>
+        <hr>
+
+        <!-- Post One -->
+        <div class="row">
+            <div class="col-md-7">
+                <a href="#">
+                    <img class="img-responsive" src="<%= post.cover_image %>" alt="">
+                </a>
+            </div>
+            <div class="col-md-5">
+                <h3><%= post.post_title %></h3>
+                <%= simple_format(post.post_text) %>
+                <a class="btn btn-primary" href="<%= user_post_path(current_user.id, post.id) %>">View Post <span class="glyphicon glyphicon-chevron-right"></span></a>
+            </div>
+        </div>
+        <!-- /.row -->
+    <% end %>
+
+    <hr>
+
+    <!-- Pagination -->
+    <div class="text-center">
+        <%= will_paginate(@posts) %>
+    </div>
+    <!-- /.row -->
+
+    <hr>
+
+    <%= render "partials/footer" %>
+
+</div>
+<!-- /.container -->

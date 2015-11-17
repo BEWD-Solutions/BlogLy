@@ -1,0 +1,11 @@
+<% if user_signed_in? %>
+	<!-- Footer -->
+	<footer>
+	    <div class="row">
+	        <div class="col-lg-12">
+	            <p>Copyright &copy; <%= current_user.first_name %> <%= current_user.last_name %> 2015</p>
+	        </div>
+	    </div>
+	    <!-- /.row -->
+	</footer>
+<% end %>
